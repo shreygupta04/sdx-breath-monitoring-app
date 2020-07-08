@@ -1,2 +1,2 @@
-# sdx-breath-monitoring-app
+# SDX Breath Monitoring App
 App made for patients to practice breathing for the SDX breath monitoring system, which is used to help treat cancer
