@@ -15,35 +15,31 @@ h3 {
 }
 
 p {
-    position: absolute;
-    display: flex;
-    margin-top: 120px;
-    position: absolute;
-    left: calc(72% + 6px);
+    margin-top: 10px;
+    text-align: center;
     font-size: larger;
 }
 
 .battery {
-    position: absolute;
     text-align: center;
-    margin-top: 20px;
-    left: 66%;
     z-index: 4;
 }
 
 .lights {
-    position: absolute;
+    z-index: 3;
     display: flex;
-    margin-top: 23px;
-    position: absolute;
-    left: 67%;
+    width: 193px; /*can be in percentage also.*/
+    height: auto;
+    margin: 0 auto;
+    padding: 10px;
+    position: relative;
+    margin-top: -97px;
 }
 
 .light-item {
     width: 52px;
     height: 80px;
     background-color: greenyellow;
-    text-align: center;
     z-index: 3;
 }
 

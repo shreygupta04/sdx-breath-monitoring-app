@@ -14,7 +14,7 @@
     </head>
     <body>
         <canvas class="main-canvas" width="100%" height="100%">
-            <h6>Hello</h6>
+            <h6>Your browser doesn't support the tools required for this site. Please update or download another browser!</h6>
         </canvas>
 
         <div class="baseline"></div>
@@ -22,11 +22,11 @@
         <div class="chest"></div>
         
         <div class="row">
-            <div class="col-8">
-                <div>
-                    <h3>SDX Breathing Practice</h3>
-                    <button type="button" class="instructions btn btn-light" data-toggle="modal" data-target="#exampleModal">Instructions</button>
-                </div>
+            <div class="col">
+                <h3>SDX Breathing Practice</h3>
+                <button type="button" class="instructions btn btn-light" data-toggle="modal" data-target="#exampleModal">Instructions</button>
+            </div>
+            <div class="col" style="display: flex; flex-direction: column">
                 <div class="battery">
                     <img src="images/battery.png">
                 </div>
@@ -35,18 +35,23 @@
                     <div class="light-item"></div>
                     <div class="light-item"></div>
                 </div>
-                <p>00:00</p>
+                <div>
+                    <p>00:00</p>
+                </div>
             </div>
             
             <div class="col">
-                <div class="btn-group" role="group" aria-label="Basic example" style="float: right; margin: 20px;">
-                    <button type="button" class="chestbtn btn btn-light">Chest</button>
-                    <button type="button" class="abdomenbtn btn btn-dark">Abdomen</button>
+                <div style="float: right; margin: 20px;">
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="chestbtn btn btn-light">Chest</button>
+                        <button type="button" class="abdomenbtn btn btn-dark">Abdomen</button>
+                    </div>
+                    <div>
+                        <button type="button" class="clearbtn btn btn-light" style="float: right; width: 167px; margin-top: 10px;">Clear</button>
+                    </div>
                 </div>
             </div>
         </div>
-        <button type="button" class="clearbtn btn btn-light" style="float: right; margin: 20px; margin-top: -10px;">Clear</button>
-
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
