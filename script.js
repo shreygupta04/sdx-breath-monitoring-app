@@ -87,8 +87,8 @@ $(document).ready(function(){
         startY = height/2 + 115
         clearInterval(time)
         $("p").text("00:00")
-        clearInterval(straight)
         down = 0
+        clearInterval(straight)
         ctx.beginPath()
         ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
     });
