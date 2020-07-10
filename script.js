@@ -5,7 +5,7 @@ canvas.style.top = "100px";
 
 var ctx = canvas.getContext('2d');
 
-ctx.strokeStyle = '#ff0000'
+ctx.strokeStyle = '#000000'
 ctx.lineWidth = 5;
 ctx.beginPath()
 
