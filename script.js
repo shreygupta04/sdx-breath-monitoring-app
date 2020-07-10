@@ -37,10 +37,10 @@ window.onkeydown = function(e) {
         forward = true
     }
     if (kc === 39) {
-        time = setInterval(updateTime, 1000)
         Keys.right = true;
         Keys.up = false
         if(forward === true) {
+            time = setInterval(updateTime, 1000)
             straight = setInterval(straightLine, 20)
             forward = false
         }
