@@ -87,7 +87,8 @@ $(document).ready(function(){
 setInterval(check, 10)
 
 function check() {
-    if(startX  === $(window).width() - 50) {
+    console.log(startX)
+    if(startX  > width - 50) {
         startX = 50
         ctx.beginPath()
         ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
