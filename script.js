@@ -82,6 +82,16 @@ $(document).ready(function(){
         $(".chest").hide();
         $(".abdomen").show();
     });
+    $(".clearbtn").click(function() {
+        startX = 50
+        startY = height/2 + 115
+        clearInterval(time)
+        $("p").text("00:00")
+        clearInterval(straight)
+        down = 0
+        ctx.beginPath()
+        ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    });
   });
 
 setInterval(check, 10)

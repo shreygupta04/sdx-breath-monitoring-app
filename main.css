@@ -1,12 +1,17 @@
 body {
     background-color: gray !important;
     overflow: hidden;
-    font-family: 'Raleway', sans-serif;
+    font-family: 'Noto Sans', sans-serif;
 }
 
 canvas {
     position: absolute;
     z-index: 2;
+}
+
+h3 {
+    position: absolute;
+    margin: 20px;
 }
 
 p {
@@ -69,6 +74,12 @@ p {
     top: 25%;
     z-index: 0;
     transition-duration: 0.5s;
+}
+
+.instructions {
+    position: absolute;
+    margin: 20px;
+    margin-top: 70px;
 }
 
 .btn:focus, .btn:active {
