@@ -13,10 +13,17 @@ var startX = 50
 var startY = height/2 + 115
 
 var downInterval;
-var curveInterval;
-var curveTimeout;
+var curveUpInterval;
+var curveUpTimeout;
+var curveDownInterval;
+var curveDownTimeout;
+var curveDownReady = true;
 
-var endAngleMultiplier = 1.3
+var timeInterval;
+var timeReady = false;
+
+var endAngleMultiplierUp = 1.3
+var endAngleMultiplierDown = 0.7
 var count = 0;
 
 var Keys = {
@@ -65,44 +72,77 @@ function upLine() {
 }
 
 // quadratic curve for when the user releases key
-function curve() {
+function curveUp() {
     count += 1
-    endAngleMultiplier += 0.01
+    endAngleMultiplierUp += 0.01
     ctx.moveTo(startX, startY)
-    ctx.arc(startX + 19, startY + 12, 20, 1.3 * Math.PI, endAngleMultiplier * Math.PI)
+    ctx.arc(startX + 19, startY + 12, 20, 1.3 * Math.PI, endAngleMultiplierUp * Math.PI)
     ctx.stroke()
     if(count === 60) {
-        clearInterval(curveInterval)
+        clearInterval(curveUpInterval)
         count = 0
-        endAngleMultiplier = 1.3
+        endAngleMultiplierUp = 1.3
+        startX += 33.5
+        startY -= 4
     }
 }
+
+// quadratic curve for when the user presses key
+function curveDown() {
+    curveDownInterval = setInterval(function() {
+        count += 1
+        endAngleMultiplierDown -= 0.01
+        ctx.moveTo(startX, startY)
+        ctx.arc(startX + 19, startY - 12, 20, 0.7 * Math.PI, endAngleMultiplierDown * Math.PI, true)
+        ctx.stroke()
+        if(count === 60) {
+            clearInterval(curveDownInterval)
+            count = 0
+            endAngleMultiplierDown = 0.7
+            startX += 33.5
+            startY += 4
+        }
+    }, 5)
+}
+
 
 window.onkeydown = function(e) {
     var kc = e.keyCode;
     e.preventDefault();
-    clearTimeout(curveTimeout)
+    clearTimeout(curveUpTimeout)
     if (kc === 38) {
         clearInterval(downInterval)
-        Keys.up = true;
-        Keys.right = false
-        upLine()
+        if(curveDownReady) {
+            curveDown()
+            curveDownReady = false
+        }
+        else {
+            Keys.up = true;
+            Keys.right = false
+            upLine()
+        }
     }
     if (kc === 39) {
         clearInterval(downInterval)
         Keys.right = true;
         Keys.up = false
         straightLine()
+        if(timeReady) {
+            timeInterval = setInterval(updateTime, 1000)
+            timeReady = false
+        }
     }
 };
 
 window.onkeyup = function(e) {
     var kc = e.keyCode;
     e.preventDefault();
-    curveInterval = setInterval(curve, 5)
-    curveTimeout = setTimeout(function () {
-        startX += 33.5
-        startY -= 4
+    timeReady = true
+    clearInterval(timeInterval)
+    $("p").text("00:00")
+    curveDownReady = true
+    curveUpInterval = setInterval(curveUp, 5)
+    curveUpTimeout = setTimeout(function () {
         downInterval = setInterval(downLine, 20)
     }, 300)
 };
@@ -142,13 +182,17 @@ $(document).ready(function(){
         $(".abdomen").show();
     });
     $(".clearbtn").click(function() {
-        startX = 50
-        startY = height/2 + 115
-        clearInterval(time)
+        clearInterval(timeInterval)
+        clearInterval(downInterval)
         $("p").text("00:00")
-        down = 0
-        clearInterval(straight)
         ctx.beginPath()
         ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+        startX = 50
+        startY = height/2 + 115
+        curveDownReady = true;
+        timeReady = false;
+        endAngleMultiplierUp = 1.3
+        endAngleMultiplierDown = 0.7
+        count = 0;
     });
   });
