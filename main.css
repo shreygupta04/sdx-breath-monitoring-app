@@ -47,7 +47,7 @@ p {
     position: absolute;
     width: 100%;
     height: 30px;
-    background-color: lightgray !important;
+    background-color: #C1BFC0 !important;
     top: 75%;
     z-index: 0;
 }
@@ -56,7 +56,7 @@ p {
     position: absolute;
     width: 100%;
     height: 30px;
-    background-color: yellowgreen !important;
+    background-color: #008443 !important;
     top: calc(75% - 30px);
     z-index: 0;
     transition-duration: 0.5s;
@@ -66,7 +66,7 @@ p {
     position: absolute;
     width: 100%;
     height: 30px;
-    background-color: yellowgreen !important;
+    background-color: #008443 !important;
     top: 25%;
     z-index: 0;
     transition-duration: 0.5s;
