@@ -27,8 +27,8 @@ var endAngleMultiplierDown = 0.7
 var count = 0;
 
 var Keys = {
-    up: false,
-    right: false
+    up: true,
+    right: true
 };
 
 
@@ -73,6 +73,7 @@ function upLine() {
 
 // quadratic curve for when the user releases key
 function curveUp() {
+    Keys.up = Keys.right = false
     count += 1
     endAngleMultiplierUp += 0.01
     ctx.moveTo(startX, startY)
@@ -84,6 +85,7 @@ function curveUp() {
         endAngleMultiplierUp = 1.3
         startX += 33.5
         startY -= 4
+        Keys.up = Keys.right = true
     }
 }
 
@@ -110,7 +112,7 @@ window.onkeydown = function(e) {
     var kc = e.keyCode;
     e.preventDefault();
     clearTimeout(curveUpTimeout)
-    if (kc === 38) {
+    if (kc === 38 & Keys.up) {
         clearInterval(downInterval)
         if(curveDownReady) {
             curveDown()
@@ -122,7 +124,7 @@ window.onkeydown = function(e) {
             upLine()
         }
     }
-    if (kc === 39) {
+    if (kc === 39 & Keys.right) {
         clearInterval(downInterval)
         Keys.right = true;
         Keys.up = false
