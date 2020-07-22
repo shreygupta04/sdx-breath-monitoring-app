@@ -2,6 +2,7 @@ body {
     background-color: gray !important;
     overflow: hidden;
     font-family: 'Noto Sans', sans-serif;
+    min-width: fit-content;
 }
 
 canvas {

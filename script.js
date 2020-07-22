@@ -198,3 +198,27 @@ $(document).ready(function(){
         count = 0;
     });
   });
+
+//number line setup
+fillStyle = '#fff';
+w = width
+h = height
+with(ctx) {
+    beginPath();
+    lineWidth = 2;
+    strokeStyle = '#fff';
+    moveTo(0, window.innerHeight/4 * 3 - 85);
+    lineTo(w, window.innerHeight/4 * 3 - 85);
+    stroke();
+    for(var i = -40; i <= 40; i++) {
+        beginPath();
+        strokeStyle = '#fff';
+        lineWidth = 2;
+        moveTo(w/2 + i * 20, window.innerHeight/4 * 3 - 90);
+        lineTo(w/2 + i * 20, window.innerHeight/4 * 3 - 80);
+        fillStyle = '#ff0';
+        fill();
+        stroke();
+        console.log("hello!")
+    }
+}
