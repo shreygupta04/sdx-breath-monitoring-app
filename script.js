@@ -111,6 +111,7 @@ function curveDown() {
 window.onkeydown = function(e) {
     var kc = e.keyCode;
     e.preventDefault();
+    ctx.strokeStyle = '#C5E16C'
     clearTimeout(curveUpTimeout)
     if (kc === 38 & Keys.up) {
         clearInterval(downInterval)
@@ -139,6 +140,7 @@ window.onkeydown = function(e) {
 window.onkeyup = function(e) {
     var kc = e.keyCode;
     e.preventDefault();
+    ctx.strokeStyle = '#C5E16C'
     timeReady = true
     clearInterval(timeInterval)
     $("p").text("00:00")
@@ -200,7 +202,6 @@ $(document).ready(function(){
   });
 
 //number line setup
-fillStyle = '#fff';
 w = width
 h = height
 with(ctx) {
