@@ -79,6 +79,7 @@ function curveUp() {
     ctx.moveTo(startX, startY)
     ctx.arc(startX + 19, startY + 12, 20, 1.3 * Math.PI, endAngleMultiplierUp * Math.PI)
     ctx.stroke()
+    console.log(count)
     if(count === 60) {
         clearInterval(curveUpInterval)
         count = 0
@@ -91,6 +92,7 @@ function curveUp() {
 
 // quadratic curve for when the user presses key
 function curveDown() {
+    Keys.up = Keys.right = false
     curveDownInterval = setInterval(function() {
         count += 1
         endAngleMultiplierDown -= 0.01
@@ -103,17 +105,20 @@ function curveDown() {
             endAngleMultiplierDown = 0.7
             startX += 33.5
             startY += 4
+            Keys.up = Keys.right = true
         }
     }, 5)
 }
 
 
 window.onkeydown = function(e) {
+    ready = false
     var kc = e.keyCode;
     e.preventDefault();
     ctx.strokeStyle = '#C5E16C'
     clearTimeout(curveUpTimeout)
-    if (kc === 38 & Keys.up) {
+    if (kc === 38 && Keys.up) {
+        console.log("Key up is: " + Keys.up)
         clearInterval(downInterval)
         if(curveDownReady) {
             curveDown()
@@ -125,7 +130,7 @@ window.onkeydown = function(e) {
             upLine()
         }
     }
-    if (kc === 39 & Keys.right) {
+    if (kc === 39 && Keys.right) {
         clearInterval(downInterval)
         Keys.right = true;
         Keys.up = false
