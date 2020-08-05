@@ -16,12 +16,14 @@ h3 {
 }
 
 p {
-    margin-top: 10px;
+    margin-top: -5px;
+    margin-left: 20px;
     text-align: center;
     font-size: larger;
 }
 
 .battery {
+    margin-top: 10px;
     text-align: center;
     z-index: 4;
 }
