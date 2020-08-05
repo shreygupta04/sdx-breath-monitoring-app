@@ -5,156 +5,125 @@ canvas.style.top = "100px";
 
 var ctx = canvas.getContext('2d');
 
-ctx.strokeStyle = '#C5E16C'
+ctx.strokeStyle = '#E21515'
 ctx.lineWidth = 5;
 ctx.beginPath()
 
-var startX = 50
-var startY = height/2 + 115
+var x = 50
+var y = height/2 + 115
 
-var downInterval;
-var curveUpInterval;
-var curveUpTimeout;
-var curveDownInterval;
-var curveDownTimeout;
-var curveDownReady = true;
+var dx = 0.5;
+var dy = 1;
 
+var rightPressed = false;
+var upPressed = false;
+var start = false
+
+var drawInterval;
 var timeInterval;
 var timeReady = false;
 
-var endAngleMultiplierUp = 1.3
-var endAngleMultiplierDown = 0.7
-var count = 0;
+document.addEventListener('keydown', keyDownHandler, false);
+document.addEventListener('keyup', keyUpHandler, false);
 
-var Keys = {
-    up: true,
-    right: true
-};
+function keyDownHandler(event) {
+    if(event.keyCode == 39) {
+        if(timeReady === true) {
+            timeReady = false
+            timeInterval = setInterval(updateTime, 1000)
+        }
+        rightPressed = true;
+    }
+    else if(event.keyCode == 38) {
+        $('p').text('00:00')
+        clearInterval(timeInterval)
+        timeReady = true
+        if(start === false) {
+            start = true
+            drawInterval = setInterval(draw, 10)
+        }
+        upPressed = true;
+    }
+    
+}
 
+function keyUpHandler(event) {
+    $("p").text("00:00")
+    if(event.keyCode == 39) {
+        rightPressed = false;
+    }
+    else if(event.keyCode == 38) {
+        upPressed = false;
+    }
+}
 
-// clears canvas when startX reaches near the end of the canvas
-function endOfCanvas() {
-    if(startX  > width - 50) {
-        startX = 50
+function draw() {
+    if (y >=  height) {
+        clearInterval(timeInterval)
+        clearInterval(drawInterval)
+        start = true
+        
         ctx.beginPath()
         ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+        x = 50
+        y = height/2 + 115
+        timeReady = false;
+        endAngleMultiplierUp = 0.7
+        endAngleMultiplierDown = 1.3
     }
-}
-
-// moves the line forward
-function straightLine() {
-    endOfCanvas()
-    for(i = 0; i < 3; i++) {
-        ctx.moveTo(startX, startY)
-        ctx.lineTo(startX += 1, startY)
-        ctx.stroke()
+    ctx.strokeStyle = '#E21515'
+    ctx.moveTo(x, y)
+    if(rightPressed == false && upPressed == false) {
+        x += dx
+        y += dy
     }
-}
-
-// moves the line down
-function downLine() {
-    endOfCanvas()
-    for(i = 0; i < 3; i++) {
-        ctx.moveTo(startX, startY)
-        ctx.lineTo(startX += 0.5, startY += 1)
-        ctx.stroke()
+    else if(rightPressed) {
+        x += dx
     }
-}
-
-// moves the line up
-function upLine() {
-    endOfCanvas()
-    for(i = 0; i < 3; i++) {
-        ctx.moveTo(startX, startY)
-        ctx.lineTo(startX += 0.5, startY -= 1)
-        ctx.stroke()
+    else if(upPressed) {
+        x += dx;
+        y -= dy;
     }
-}
-
-// quadratic curve for when the user releases key
-function curveUp() {
-    Keys.up = Keys.right = false
-    count += 1
-    endAngleMultiplierUp += 0.01
-    ctx.moveTo(startX, startY)
-    ctx.arc(startX + 19, startY + 12, 20, 1.3 * Math.PI, endAngleMultiplierUp * Math.PI)
+    ctx.lineTo(x, y);
     ctx.stroke()
-    console.log(count)
-    if(count === 60) {
-        clearInterval(curveUpInterval)
-        count = 0
-        endAngleMultiplierUp = 1.3
-        startX += 33.5
-        startY -= 4
-        Keys.up = Keys.right = true
-    }
 }
 
-// quadratic curve for when the user presses key
-function curveDown() {
-    Keys.up = Keys.right = false
-    curveDownInterval = setInterval(function() {
-        count += 1
-        endAngleMultiplierDown -= 0.01
-        ctx.moveTo(startX, startY)
-        ctx.arc(startX + 19, startY - 12, 20, 0.7 * Math.PI, endAngleMultiplierDown * Math.PI, true)
+function curveUp() {
+    clearInterval(drawInterval)
+    var curveUpInterval = setInterval(helper, 5)
+    var endAngleMultiplierUp = 0.7
+    function helper() {
+        endAngleMultiplierUp -= 0.01
+        ctx.moveTo(x, y)
+        ctx.arc(x + 19, y - 12, 20, 0.7 * Math.PI, endAngleMultiplierUp * Math.PI, true)
         ctx.stroke()
-        if(count === 60) {
-            clearInterval(curveDownInterval)
-            count = 0
-            endAngleMultiplierDown = 0.7
-            startX += 33.5
-            startY += 4
-            Keys.up = Keys.right = true
+        console.log(endAngleMultiplierUp)
+        if(endAngleMultiplierUp <= 0.2) {
+            clearInterval(curveUpInterval)
+            x += 33.5
+            y += 3
+            
         }
-    }, 5)
+    }
 }
 
-
-window.onkeydown = function(e) {
-    ready = false
-    var kc = e.keyCode;
-    e.preventDefault();
-    ctx.strokeStyle = '#C5E16C'
-    clearTimeout(curveUpTimeout)
-    if (kc === 38 && Keys.up) {
-        console.log("Key up is: " + Keys.up)
-        clearInterval(downInterval)
-        if(curveDownReady) {
-            curveDown()
-            curveDownReady = false
-        }
-        else {
-            Keys.up = true;
-            Keys.right = false
-            upLine()
+function curveDown() {
+    clearInterval(drawInterval)
+    var curveDownInterval = setInterval(temp, 5)
+    var endAngleMultiplierDown = 1.3
+    function temp() {
+        endAngleMultiplierDown += 0.01
+        ctx.moveTo(x, y)
+        ctx.arc(x + 19, y + 12, 20, 1.3 * Math.PI, endAngleMultiplierDown * Math.PI)
+        ctx.stroke()
+        console.log(endAngleMultiplierDown)
+        if(endAngleMultiplierDown >= 1.8) {
+            clearInterval(curveDownInterval)
+            x += 34.5
+            y -= 2
         }
     }
-    if (kc === 39 && Keys.right) {
-        clearInterval(downInterval)
-        Keys.right = true;
-        Keys.up = false
-        straightLine()
-        if(timeReady) {
-            timeInterval = setInterval(updateTime, 1000)
-            timeReady = false
-        }
-    }
-};
-
-window.onkeyup = function(e) {
-    var kc = e.keyCode;
-    e.preventDefault();
-    ctx.strokeStyle = '#C5E16C'
-    timeReady = true
-    clearInterval(timeInterval)
-    $("p").text("00:00")
-    curveDownReady = true
-    curveUpInterval = setInterval(curveUp, 5)
-    curveUpTimeout = setTimeout(function () {
-        downInterval = setInterval(downLine, 20)
-    }, 300)
-};
+}
 
 
 // increments timer at top of the screen
