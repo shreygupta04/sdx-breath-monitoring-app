@@ -161,17 +161,26 @@ $(document).ready(function(){
     });
     $(".clearbtn").click(function() {
         clearInterval(timeInterval)
-        clearInterval(downInterval)
         $("p").text("00:00")
         ctx.beginPath()
         ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
-        startX = 50
-        startY = height/2 + 115
-        curveDownReady = true;
+        x = 50
+        y = height/2 + 115
+
+        dx = 0.5;
+        dy = 1;
+
+        rightPressed = false;
+        upPressed = false;
+        start = false
+
+        drawInterval;
+        timeInterval;
         timeReady = false;
-        endAngleMultiplierUp = 1.3
-        endAngleMultiplierDown = 0.7
-        count = 0;
+        clearInterval(timeInterval)
+        clearInterval(drawInterval)
+        endAngleMultiplierUp = 0.7
+        endAngleMultiplierDown = 1.3
     });
   });
 
