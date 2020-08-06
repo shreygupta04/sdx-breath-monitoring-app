@@ -77,6 +77,12 @@ function draw() {
         endAngleMultiplierUp = 0.7
         endAngleMultiplierDown = 1.3
     }
+    if (x >= width) {
+        x = 50
+        ctx.beginPath()
+        ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    }
+    
     ctx.strokeStyle = '#E21515'
     ctx.moveTo(x, y)
     if(rightPressed == false && upPressed == false) {
