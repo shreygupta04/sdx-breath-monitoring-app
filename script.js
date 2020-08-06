@@ -28,7 +28,14 @@ document.addEventListener('keyup', keyUpHandler, false);
 
 function keyDownHandler(event) {
     if(event.keyCode == 39) {
-        if(timeReady === true) {
+        if(active === "abdomen") {
+            var abdomenTop = $('.abdomen').position().top - $('.main-canvas').position().top
+        }
+        else {
+            var chestTop = $('.chest').position().top - $('.main-canvas').position().top
+            
+        }
+        if(timeReady === true && ( (y > abdomenTop && y < abdomenTop + 30) || (y > chestTop && y < chestTop + 30) )) {
             timeReady = false
             timeInterval = setInterval(updateTime, 1000)
         }
@@ -36,7 +43,6 @@ function keyDownHandler(event) {
     }
     else if(event.keyCode == 38) {
         $('p').text('00:00')
-        clearInterval(timeInterval)
         timeReady = true
         if(start === false) {
             start = true
@@ -48,6 +54,7 @@ function keyDownHandler(event) {
 }
 
 function keyUpHandler(event) {
+    clearInterval(timeInterval)
     $("p").text("00:00")
     if(event.keyCode == 39) {
         rightPressed = false;
@@ -58,11 +65,10 @@ function keyUpHandler(event) {
 }
 
 function draw() {
-    if (y >=  height) {
+    if (y >=  height - 50) {
         clearInterval(timeInterval)
         clearInterval(drawInterval)
-        start = true
-        
+        start = false
         ctx.beginPath()
         ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
         x = 50
@@ -140,24 +146,29 @@ function updateTime() {
 }
 
 
+var active = "chest"
+
 // changes green line depending on button selected
 // clear button to reset program
 $(".chestbtn").addClass('btn-light').removeClass('btn-dark')
         $(".abdomenbtn").addClass('btn-dark').removeClass('btn-light')
         $(".abdomen").hide();
         $(".chest").show();
+        
 $(document).ready(function(){
     $(".chestbtn").click(function(){
         $(".chestbtn").addClass('btn-light').removeClass('btn-dark')
         $(".abdomenbtn").addClass('btn-dark').removeClass('btn-light')
         $(".abdomen").hide();
         $(".chest").show();
+        active = "chest"
     });
     $(".abdomenbtn").click(function(){
         $(".abdomenbtn").addClass('btn-light').removeClass('btn-dark')
         $(".chestbtn").addClass('btn-dark').removeClass('btn-light')
         $(".chest").hide();
         $(".abdomen").show();
+        active = "abdomen"
     });
     $(".clearbtn").click(function() {
         clearInterval(timeInterval)
