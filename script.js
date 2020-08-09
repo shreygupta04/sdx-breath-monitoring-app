@@ -10,9 +10,9 @@ ctx.lineWidth = 5;
 ctx.beginPath()
 
 var x = 50
-var y = height/2 + 115
+var y = height/2 + 160
 
-var dx = 0.5;
+var dx = 0.25;
 var dy = 1;
 
 var rightPressed = false;
@@ -54,6 +54,7 @@ function keyDownHandler(event) {
 }
 
 function keyUpHandler(event) {
+    timeReady = true
     clearInterval(timeInterval)
     $("p").text("00:00")
     if(event.keyCode == 39) {
@@ -72,7 +73,7 @@ function draw() {
         ctx.beginPath()
         ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
         x = 50
-        y = height/2 + 115
+        y = height/2 + 160
         timeReady = false;
         endAngleMultiplierUp = 0.7
         endAngleMultiplierDown = 1.3
@@ -182,7 +183,7 @@ $(document).ready(function(){
         ctx.beginPath()
         ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
         x = 50
-        y = height/2 + 115
+        y = height/2 + 160
 
         dx = 0.5;
         dy = 1;
@@ -208,15 +209,15 @@ with(ctx) {
     beginPath();
     lineWidth = 2;
     strokeStyle = '#fff';
-    moveTo(0, window.innerHeight/4 * 3 - 85);
-    lineTo(w, window.innerHeight/4 * 3 - 85);
+    moveTo(0, window.innerHeight/4 * 3 - 70);
+    lineTo(w, window.innerHeight/4 * 3 - 70);
     stroke();
     for(var i = -40; i <= 40; i++) {
         beginPath();
         strokeStyle = '#fff';
         lineWidth = 2;
-        moveTo(w/2 + i * 20, window.innerHeight/4 * 3 - 90);
-        lineTo(w/2 + i * 20, window.innerHeight/4 * 3 - 80);
+        moveTo(w/2 + i * 20, window.innerHeight/4 * 3 - 75);
+        lineTo(w/2 + i * 20, window.innerHeight/4 * 3 - 65);
         fillStyle = '#ff0';
         fill();
         stroke();
